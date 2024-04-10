@@ -2,10 +2,11 @@ import mongoose from "mongoose";
 
 const connectUserDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI || "");
+    const uri = process.env.MONGODB_URI || "mongodb+srv://bruno35418:indaiacult@indaiacult.hdajmzg.mongodb.net/"
+    const conn = await mongoose.connect(uri);
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error: any) {
-    console.error(`Error: ${error.message}`);
+    console.error(`fudeu no userDB: ${error.message}`);
     process.exit(1);
   }
 };
