@@ -1,0 +1,9 @@
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = true
+	symlinks = false
+	ignorecase = true
+[remote "TccIndaiaCult"]
+	url = https://github.com/ArthurMaceddo/TccIndaiaCult.git
+	fetch = +refs/heads/*:refs/remotes/TccIndaiaCult/*
