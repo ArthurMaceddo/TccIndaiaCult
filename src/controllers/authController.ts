@@ -28,6 +28,7 @@ const registerUser = async (req: Request, res: Response) => {
   }
 };
 
+
 const authenticateUser = async (req: Request, res: Response) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });

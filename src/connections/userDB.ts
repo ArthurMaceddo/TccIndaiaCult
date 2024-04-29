@@ -6,7 +6,7 @@ const connectUserDB = async () => {
     const conn = await mongoose.connect(uri);
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error: any) {
-    console.error(`fudeu no userDB: ${error.message}`);
+    console.error(`Erro no userDB: ${error.message}`);
     process.exit(1);
   }
 };
