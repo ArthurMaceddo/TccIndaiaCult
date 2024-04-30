@@ -2,6 +2,34 @@ import User from "../models/User";
 import { Request, Response } from "express";
     
 
+const createUser = async (req: Request, res: Response) => {
+    try {
+        const { name, email, password } = req.body;
+        
+        if (!name || !email || !password) {
+            return res.status(400).json({ message: "Por favor, forneça todos os campos necessários." });
+        }
+
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: "Este email já está em uso." });
+        }
+
+        const newUser = new User({
+            name,
+            email,
+            password,
+        });
+
+        await newUser.save();
+
+        res.status(201).json({ message: "Usuário criado com sucesso.", user: newUser });
+    } catch (error) {
+        console.error("Erro ao criar usuário:", error);
+        res.status(500).json({ message: "Ocorreu um erro ao criar o usuário." });
+    }
+};
+
 const getUser = async (req: Request, res: Response) =>{
     const userId = req.user?._id;
     const user = await User.findById(userId, "name email");
@@ -37,4 +65,4 @@ const deleteUser = async (req:Request, res: Response) => {
     }
     
 }
-export { getUser, listUser, deleteUser };
+export { createUser, getUser, listUser, deleteUser };
