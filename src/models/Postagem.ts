@@ -20,6 +20,4 @@ const postagemSchema = new Schema<IPostagem>({
 
 const Postagem = mongoose.model<IPostagem>("Postagem", postagemSchema);
 
-
-
 export default Postagem;

@@ -22,8 +22,8 @@ const createPostagem = async(req:Request, res: Response) => {
       console.error("Erro ao criar postagem:", error);
       res.status(500).json({ message: "Ocorreu um erro ao criar a postagem." });
     }
-
- const getPostagem = async ( req: Request, res: Response) => {
+};
+    const getPostagem = async ( req: Request, res: Response) => {
         const postagemId = req.postagem?._id;
         const postagem = await Postagem.findById(postagemId, "tittle description");
 
@@ -33,7 +33,7 @@ const createPostagem = async(req:Request, res: Response) => {
 
             res.status(200).json(postagem);
         }
-};
+
 
     const listPostagem = async( req: Request, res: Response) => {
         try{
@@ -59,4 +59,5 @@ const createPostagem = async(req:Request, res: Response) => {
         }
     }
 
-  export { createPostagem, listPostagem, deletePostagem}
+
+  export { createPostagem, listPostagem, getPostagem, deletePostagem}

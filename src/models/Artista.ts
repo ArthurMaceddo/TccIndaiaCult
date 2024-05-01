@@ -1,14 +1,18 @@
 import mongoose, { Document, Schema } from "mongoose";
 import bcrypt from "bcryptjs";
 
-export interface IUser extends Document {
+export interface IArtista extends Document {
   name: string;
   email: string;
   password: string;
+  genre: string;
+  description: string;
+  image: string;
+  banner: string;
   comparePassword: (enteredPassword: string) => boolean;
 }
 
-const userSchema = new Schema<IUser>({
+const artistaSchema = new Schema<IArtista>({
   name: {
     type: String,
     required: true,
@@ -22,9 +26,24 @@ const userSchema = new Schema<IUser>({
     type: String,
     required: true,
   },
+  genre: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  image: {
+    type: String,
+    required: true,
+  },
+  banner: {
+    type: String,
+    required: true,
+  },
 });
-
-userSchema.pre("save", async function (next) {
+ artistaSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     next();
   }
@@ -32,11 +51,10 @@ userSchema.pre("save", async function (next) {
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
-
-userSchema.methods.comparePassword = async function (enteredPassword: string) {
+ artistaSchema.methods.comparePassword = async function (enteredPassword: string) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-const User = mongoose.model("User", userSchema);
+const Artista = mongoose.model("Artista", artistaSchema);
 
-export default User;
+export default Artista;
