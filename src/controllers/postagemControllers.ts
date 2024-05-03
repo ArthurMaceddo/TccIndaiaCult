@@ -1,28 +1,36 @@
 import { Request, Response } from "express"
+import { authenticate } from "../middleware/authMiddleware";
 import Postagem, { IPostagem } from "../models/Postagem";
 
 
 const createPostagem = async(req:Request, res: Response) => {
     try {
-        const { title, description } = req.body;
-
-        if(!title || !description) {
-            return res.status(400).json({ message: "Por favor, forneça todos os campos necessarios"})
+        authenticate(req, res, () => {
+            if (!req.artista) {
+              return res.status(401).json({ message: "Não autorizado" });
+            }
+      
+            const { title, description } = req.body;
+      
+            if (!title || !description) {
+              return res.status(400).json({ message: "Por favor, forneça todos os campos necessarios" });
+            }
+      
+            const novaPostagem: IPostagem = new Postagem({
+              title,
+              description,
+              artista: req.artista._id, // add the artist id to the post
+            });
+      
+            novaPostagem.save();
+      
+            res.status(201).json({ message: "Postagem criada com sucesso.", postagem: novaPostagem });
+          });
+        } catch (error) {
+          console.error("Erro ao criar postagem:", error);
+          res.status(500).json({ message: "Ocorreu um erro ao criar a postagem." });
         }
-
-    const novaPostagem: IPostagem = new Postagem({
-        title,
-        description,
-      });
-  
-      await novaPostagem.save();
-  
-      res.status(201).json({ message: "Postagem criada com sucesso.", postagem: novaPostagem });
-    } catch (error) {
-      console.error("Erro ao criar postagem:", error);
-      res.status(500).json({ message: "Ocorreu um erro ao criar a postagem." });
-    }
-};
+      };
     const getPostagem = async ( req: Request, res: Response) => {
         const postagemId = req.postagem?._id;
         const postagem = await Postagem.findById(postagemId, "tittle description");
@@ -60,4 +68,4 @@ const createPostagem = async(req:Request, res: Response) => {
     }
 
 
-  export { createPostagem, listPostagem, getPostagem, deletePostagem}
+  export {createPostagem, listPostagem, getPostagem, deletePostagem}

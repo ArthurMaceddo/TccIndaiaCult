@@ -34,7 +34,7 @@ app.listen(port, () => {
 });
 
 app.use(authRouter);
-app.use("/users", authenticate, userRouter);
+app.use("/artistas", authenticate, userRouter);
 
 app.use(errorHandler);
 

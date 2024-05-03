@@ -1,53 +1,57 @@
 import { Request, Response } from "express";
-import User from "../models/User";
+import Artista from "../models/Artista";
 import { generateToken, clearToken } from "../utils/auth";
 
-const registerUser = async (req: Request, res: Response) => {
-  const { name, email, password } = req.body;
-  const userExists = await User.findOne({ email });
+const registerArtista = async (req: Request, res: Response) => {
+  const { name, email, password, genre, description, image, banner, } = req.body;
+  const artistaExists = await Artista.findOne({ email });
 
-  if (userExists) {
-    res.status(400).json({ message: "Usuário já existente" });
+  if (artistaExists) {
+    return res.status(400).json({ message: "Artista já existente" });
   }
 
-  const user = await User.create({
+  const artista = await Artista.create({
     name,
     email,
     password,
+    genre, 
+    description, 
+    image, 
+    banner,
   });
 
-  if (user) {
-    generateToken(res, user._id);
+  if (artista) {
+    generateToken(res, artista._id);
     res.status(201).json({
-      id: user._id,
-      name: user.name,
-      email: user.email,
+      id: artista._id,
+      name: artista.name,
+      email: artista.email,
     });
   } else {
-    res.status(400).json({ message: "Aconteceu um erro durando a criação deste usuário" });
+    res.status(400).json({ message: "Aconteceu um erro durando a criação deste Artista" });
   }
 };
 
 
-const authenticateUser = async (req: Request, res: Response) => {
+const authenticateArtista = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  const user = await User.findOne({ email });
+  const artista = await Artista.findOne({ email });
 
-  if (user && (await user.comparePassword(password))) {
-    generateToken(res, user._id);
+  if (artista && (await artista.comparePassword(password))) {
+    generateToken(res, artista._id);
     res.status(201).json({
-      id: user._id,
-      name: user.name,
-      email: user.email,
+      id: artista._id,
+      name: artista.name,
+      email: artista.email,
     });
   } else {
-    res.status(401).json({ message: "Usuário não encontrado / password incorrect" });
+    res.status(401).json({ message: "Artista não encontrado / password incorrect" });
   }
 };
 
-const logoutUser = (req: Request, res: Response) => {
+const logoutArtista = (req: Request, res: Response) => {
   clearToken(res);
-  res.status(200).json({ message: "Usário se desconectou" });
+  res.status(200).json({ message: "Artista se desconectou" });
 };
 
-export { registerUser, authenticateUser, logoutUser };
+export { registerArtista, authenticateArtista, logoutArtista };

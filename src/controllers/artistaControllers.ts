@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Artista from "../models/Artista";
+import { ArtistaBasicInfo } from "../types/artistaTypes";
     
 
 const createArtista = async (req: Request, res: Response) => {
@@ -10,6 +11,8 @@ const createArtista = async (req: Request, res: Response) => {
             return res.status(400).json({ message: "Por favor, forneça todos os campos necessários." });
         }
 
+
+        
         const existingArtista = await Artista.findOne({ email });
         if (existingArtista) {
             return res.status(400).json({ message: "Este email já está em uso." });
@@ -21,7 +24,7 @@ const createArtista = async (req: Request, res: Response) => {
             password, 
             genre, 
             description, 
-            image, 
+            image,
             banner,
         });
 
