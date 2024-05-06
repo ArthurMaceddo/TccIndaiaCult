@@ -1,9 +1,8 @@
 import express from "express";
-import { getArtista } from "../controllers/artistaControllers";
-
+import { getArtista, listArtista } from "../controllers/artistaControllers";
 
 const router = express.Router();
 
-router.get("./id", getArtista);
+router.get("/:id", getArtista);
 
-export default router
+export default router;
