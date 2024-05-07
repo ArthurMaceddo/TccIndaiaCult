@@ -9,6 +9,7 @@ import cookieParser from "cookie-parser";
 import userRouter from "./routes/userRouter";
 import { authenticate } from "./middleware/authMiddleware";
 import { errorHandler } from "./middleware/errorMiddleware";
+import postagemRouter from "./routes/postagemAuthRouter";
 
 dotenv.config();
 
@@ -35,6 +36,7 @@ app.listen(port, () => {
 
 app.use(authRouter);
 app.use("/artistas", authenticate, userRouter);
+app.use("/postagem", authenticate, postagemRouter);
 
 app.use(errorHandler);
 

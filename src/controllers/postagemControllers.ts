@@ -32,7 +32,7 @@ const createPostagem = async(req:Request, res: Response) => {
         }
       };
     const getPostagem = async ( req: Request, res: Response) => {
-        const postagemId = req.postagem?._id;
+        const {postagemId} = req.params
         const postagem = await Postagem.findById(postagemId, "tittle description");
 
             if(!postagem){
@@ -53,7 +53,7 @@ const createPostagem = async(req:Request, res: Response) => {
     }
 
     const deletePostagem = async (req: Request, res: Response) => {
-        const postagemId = req.postagem?._id;
+        const {postagemId} = req.params
         try{
             const postagem = await Postagem.findByIdAndDelete(postagemId)
 

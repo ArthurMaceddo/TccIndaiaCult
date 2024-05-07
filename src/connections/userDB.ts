@@ -4,7 +4,7 @@ const connectUserDB = async () => {
   try {
     const uri =
       process.env.MONGODB_URI ||
-      "mongodb+srv://bruno35418:indaiacult@2024@indaiacult.hdajmzg.mongodb.net/";
+      "mongodb+srv://bruno35418:indaiacult@2024@indaiacult.hdajmzg.mongodb.net/Indaiacult";
     const conn = await mongoose.connect(uri);
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error: any) {
