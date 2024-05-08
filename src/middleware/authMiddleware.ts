@@ -3,10 +3,11 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import asyncHandler from "express-async-handler";
 import Artista from "../models/Artista";
 
-    const authenticate = asyncHandler(
+    const authenticate = (
         async (req: Request, res: Response, next: NextFunction) =>{
             try{
                 let token = req.cookies.jwt;
+                console.log(token);
 
                 if(!token) {
                     res.status(401);
