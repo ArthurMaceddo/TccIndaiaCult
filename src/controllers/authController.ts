@@ -26,6 +26,10 @@ const registerArtista = async (req: Request, res: Response) => {
       id: artista._id,
       name: artista.name,
       email: artista.email,
+      genre: artista.genre,
+      description: artista.description, 
+      image: artista.image,
+      banner: artista.banner
     });
   } else {
     res.status(400).json({ message: "Aconteceu um erro durando a criação deste Artista" });
@@ -43,6 +47,10 @@ const authenticateArtista = async (req: Request, res: Response) => {
       id: artista._id,
       name: artista.name,
       email: artista.email,
+      genre: artista.genre,
+      description: artista.description, 
+      image: artista.image,
+      banner: artista.banner
     });
   } else {
     res.status(401).json({ message: "Artista não encontrado / password incorrect" });
