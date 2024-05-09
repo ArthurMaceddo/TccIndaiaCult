@@ -6,4 +6,5 @@ const router = express.Router();
 router.get("/:id", getArtista);
 
 
+
 export default router;
