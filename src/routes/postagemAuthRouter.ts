@@ -1,12 +1,11 @@
 import express from 'express';
-import { authenticateArtista } from '../controllers/authController';
+import { authenticateArtista } from '../controllers/authArtistaController';
 import {
   createPostagem,
   deletePostagem,
   getPostagem,
   listPostagem,
 } from '../controllers/postagemControllers';
-import { authenticate } from '../middleware/authMiddleware';
 
 const router = express.Router();
 

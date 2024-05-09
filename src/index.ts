@@ -10,8 +10,8 @@ import userRouter from './routes/userRouter';
 import { authenticate } from './middleware/authMiddleware';
 import { errorHandler } from './middleware/errorMiddleware';
 import postagemRouter from './routes/postagemAuthRouter';
-import { appendFile } from 'fs';
-import { authenticateArtista } from './controllers/authController';
+import { authenticateArtista } from './controllers/authArtistaController';
+import { authenticateUsuario } from './controllers/Usuario/authUsuarioController';
 
 dotenv.config();
 
@@ -41,6 +41,9 @@ app.post('/login', authenticateArtista);
 
 app.use('/postagem', authenticate, postagemRouter);
 
+app.use('/usuario', authenticate, userRouter);
+app.use('/registrarUsuario', authenticateUsuario);
+app.use('/loginUsuario', authenticateUsuario);
 app.use(errorHandler);
 
 connectUserDB();

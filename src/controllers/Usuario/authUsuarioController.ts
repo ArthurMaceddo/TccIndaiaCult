@@ -1,0 +1,58 @@
+import Usuario from '../../models/Usuario';
+import { Request, Response } from 'express';
+import { clearToken, generateToken } from '../../utils/auth';
+
+const registerUsuario = async (req: Request, res: Response) => {
+  const { name, email, password } = req.body;
+  const usuarioExits = await Usuario.findOne({ email });
+
+  if (usuarioExits) {
+    return res.status(400).json({ message: 'Usuario já existente' });
+  }
+
+  const usuario = await Usuario.create({
+    name,
+    email,
+    password,
+  });
+
+  if (usuario) {
+    generateToken(res, usuario._id);
+    res.status(201).json({
+      id: usuario._id,
+      name: usuario.name,
+      email: usuario.email,
+      password: usuario.password,
+    });
+  } else {
+    res
+      .status(400)
+      .json({ message: 'Aconteceu um erro durante a criação deste Usuario' });
+  }
+};
+
+const authenticateUsuario = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+  const usuario = await Usuario.findOne({ email });
+
+  if (usuario && (await usuario.comparePassword(password))) {
+    generateToken(res, usuario._id);
+    res.status(201).json({
+      id: usuario._id,
+      name: usuario.name,
+      email: usuario.email,
+      password: usuario.password,
+    });
+  } else {
+    res
+      .status(401)
+      .json({ message: 'Usuario não encontrado / password incorrent' });
+  }
+};
+
+const logoutUsuario = (req: Request, res: Response) => {
+  clearToken(res);
+  res.status(200).json({ message: 'Usuario se desconectou' });
+};
+
+export { registerUsuario, authenticateUsuario, logoutUsuario };
