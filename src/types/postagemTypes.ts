@@ -1,16 +1,18 @@
 // types.ts
 export interface PostagemBasicInfo {
-    _id: string;
-    title: string;
-    description: string;
-  }
-  
-  declare global {
-    namespace Express {
-      interface Request {
-        postagem?: PostagemBasicInfo | null;
-      }
+  id: string;
+  title: string;
+  category: string;
+  description: string;
+  image: string;
+  artista: string;
+  artistaImage: string;
+}
+
+declare global {
+  namespace Express {
+    interface Request {
+      postagem?: PostagemBasicInfo | null;
     }
   }
-
-  
+}
