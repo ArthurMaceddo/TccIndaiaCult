@@ -43,7 +43,7 @@ const artistaSchema = new Schema<IArtista>({
     required: true,
   },
 });
- artistaSchema.pre("save", async function (next) {
+artistaSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     next();
   }
@@ -51,7 +51,9 @@ const artistaSchema = new Schema<IArtista>({
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
- artistaSchema.methods.comparePassword = async function (enteredPassword: string) {
+artistaSchema.methods.comparePassword = async function (
+  enteredPassword: string
+) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 

@@ -1,12 +1,12 @@
-import mongoose, { Document, Schema } from 'mongoose';
-import bcrypt from 'bcryptjs';
+import mongoose, { Document, Schema } from "mongoose";
+import bcrypt from "bcryptjs";
 
 export interface IObra extends Document {
   Id: String;
   name: String;
   imagem: String;
   dataCriacao: Date;
-  artistaId: String;
+  artista: String;
 }
 
 const obraSChema = new Schema<IObra>({
@@ -18,12 +18,12 @@ const obraSChema = new Schema<IObra>({
     type: Date,
     required: true,
   },
-  artistaId: {
+  artista: {
     type: String,
     required: true,
   },
 });
 
-const Obra = mongoose.model('Obra', obraSChema);
+const Obra = mongoose.model("Obra", obraSChema);
 
 export default Obra;
