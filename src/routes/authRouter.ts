@@ -2,8 +2,11 @@ import express from 'express';
 import {
   authenticateArtista,
   logoutArtista,
-} from '../controllers/authArtistaController';
-import { deleteArtista, listArtista } from '../controllers/artistaControllers';
+} from '../controllers/Artista/authArtistaController';
+import {
+  deleteArtista,
+  listArtista,
+} from '../controllers/Artista/artistaControllers';
 
 const router = express.Router();
 

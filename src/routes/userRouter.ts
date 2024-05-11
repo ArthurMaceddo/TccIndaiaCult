@@ -1,16 +1,19 @@
 import express from 'express';
-import { getArtista, listArtista } from '../controllers/artistaControllers';
 import { logoutUsuario } from '../controllers/Usuario/authUsuarioController';
-import { listUsuario, deleteUser } from '../controllers/Usuario/userController';
-import { createUser } from '../controllers/Usuario/usuarioControllers';
+import {
+  listUsuario,
+  getUsuario,
+  createUsuario,
+  deleteUsuario,
+} from '../controllers/Usuario/userController';
 
 const router = express.Router();
 
-router.get('/:id', getArtista);
+router.get('/:id', getUsuario);
 
-router.post('/registrarUsuario', createUser);
+router.post('/registrarUsuario', createUsuario);
 router.post('/logoutUsuario', logoutUsuario);
 router.get('/todosUsuarios', listUsuario);
-router.delete('/deletaUsuario/:usuarioId', deleteUser);
+router.delete('/deletaUsuario/:usuarioId', deleteUsuario);
 
 export default router;
