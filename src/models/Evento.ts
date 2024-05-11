@@ -1,6 +1,6 @@
 import mongoose, { Document, Schema } from "mongoose";
 
-export interface IPostagem extends Document {
+export interface IEvento extends Document {
   id: string;
   title: string;
   category: string;
@@ -10,7 +10,7 @@ export interface IPostagem extends Document {
   artistaImage: string;
 }
 
-const postagemSchema = new Schema<IPostagem>({
+const eventoSchema = new Schema<IEvento>({
   title: {
     type: String,
     required: true,
@@ -37,6 +37,6 @@ const postagemSchema = new Schema<IPostagem>({
   },
 });
 
-const Postagem = mongoose.model<IPostagem>("Postagem", postagemSchema);
+const Evento = mongoose.model<IEvento>("Evento", eventoSchema);
 
-export default Postagem;
+export default Evento;

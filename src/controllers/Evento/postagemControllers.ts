@@ -1,8 +1,8 @@
-import { Request, Response } from 'express';
-import { authenticate } from '../../middleware/authMiddleware';
-import Postagem, { IPostagem } from '../../models/Postagem';
+import { Request, Response } from "express";
+import { authenticate } from "../../middleware/authMiddleware";
+import Evento, { IEvento } from "../../models/Evento";
 
-const createPostagem = async (req: Request, res: Response) => {
+const createEvento = async (req: Request, res: Response) => {
   try {
     const { id, title, category, description, image, artista, artistaImage } =
       req.body;
@@ -10,10 +10,10 @@ const createPostagem = async (req: Request, res: Response) => {
     if (!title || !description) {
       return res
         .status(400)
-        .json({ message: 'Por favor, forneça todos os campos necessários' });
+        .json({ message: "Por favor, forneça todos os campos necessários" });
     }
 
-    const novaPostagem: IPostagem = new Postagem({
+    const novoEvento: IEvento = new Evento({
       id,
       title,
       category,
@@ -23,60 +23,57 @@ const createPostagem = async (req: Request, res: Response) => {
       artistaImage,
     });
 
-    await novaPostagem.save(); // Adicionei o await aqui para aguardar a conclusão da operação de salvamento
+    await novoEvento.save();
 
     res.status(201).json({
-      message: 'Postagem criada com sucesso.',
-      postagem: novaPostagem,
+      message: "Evento criado com sucesso.",
+      evento: novoEvento,
     });
   } catch (error) {
-    console.error('Erro ao criar postagem:', error);
-    res.status(500).json({ message: 'Ocorreu um erro ao criar a postagem.' });
+    console.error("Erro ao criar evento:", error);
+    res.status(500).json({ message: "Ocorreu um erro ao criar o evento." });
   }
 };
 
-const getPostagem = async (req: Request, res: Response) => {
-  const { postagemId } = req.params;
-  const postagem = await Postagem.findById(
-    postagemId,
-    'tittle description category artista'
+const getEvento = async (req: Request, res: Response) => {
+  const { eventoId } = req.params;
+  const evento = await Evento.findById(
+    eventoId,
+    "title description category artista"
   );
 
-  if (!postagem) {
-    return res.status(404).json({ message: 'Postagem não encontrada' });
+  if (!evento) {
+    return res.status(404).json({ message: "Evento não encontrado" });
   }
 
-  res.status(200).json(postagem);
+  res.status(200).json(evento);
 };
 
-const listPostagem = async (req: Request, res: Response) => {
+const listEvento = async (req: Request, res: Response) => {
   try {
-    const postagens = await Postagem.find(
-      {},
-      'tittle description category artista'
-    );
-    res.status(200).json(postagens);
+    const eventos = await Evento.find({}, "title description category artista");
+    res.status(200).json(eventos);
   } catch (Error) {
-    res.status(500).json('Ocorreu um erro na listagem de postagens.');
+    res.status(500).json("Ocorreu um erro na listagem de eventos.");
   }
 };
 
-const deletePostagem = async (req: Request, res: Response) => {
-  const { postagemId } = req.params;
+const deleteEvento = async (req: Request, res: Response) => {
+  const { eventoId } = req.params;
   try {
-    const postagem = await Postagem.findByIdAndDelete(postagemId);
+    const evento = await Evento.findByIdAndDelete(eventoId);
 
-    if (!postagem) {
-      return res.status(404).json({ message: 'Postagem não encontrada' });
+    if (!evento) {
+      return res.status(404).json({ message: "Evento não encontrado" });
     }
 
-    res.status(200).json({ message: 'Postagem deletada com sucesso' });
+    res.status(200).json({ message: "Evento deletado com sucesso" });
   } catch (Error) {
     res.status(500).json({
       message:
-        'Ocorreu um erro enquanto se deleveta a postagem, tente novamente.',
+        "Ocorreu um erro enquanto se deletava o evento, tente novamente.",
     });
   }
 };
 
-export { createPostagem, listPostagem, getPostagem, deletePostagem };
+export { createEvento, listEvento, getEvento, deleteEvento };
