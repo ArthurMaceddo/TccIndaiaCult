@@ -1,25 +1,39 @@
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose, { Date, Document, Schema } from "mongoose";
 
 export interface IEvento extends Document {
-  id: string;
-  title: string;
-  category: string;
-  description: string;
+  Titulo: string;
+  Categoria: string;
+  DescricaoEvento: string;
+  Data: Date;
   image: string;
   artista: string;
-  artistaImage: string;
+  artistaImagem: string;
+  Cep: number;
+  Pais: string;
+  Estado: string;
+  Cidade: string;
+  TipoBairro: string;
+  Bairro: string;
+  TipoRua: string;
+  Rua: string;
+  Numero: number;
+  Complemento: string;
 }
 
 const eventoSchema = new Schema<IEvento>({
-  title: {
+  Titulo: {
     type: String,
     required: true,
   },
-  category: {
+  Categoria: {
     type: String,
     required: true,
   },
-  description: {
+  DescricaoEvento: {
+    type: String,
+    required: true,
+  },
+  Data: {
     type: String,
     required: true,
   },
@@ -31,9 +45,49 @@ const eventoSchema = new Schema<IEvento>({
     type: String,
     required: true,
   },
-  artistaImage: {
+  artistaImagem: {
     type: String,
     required: true,
+  },
+  Cep: {
+    type: Number,
+    required: true,
+  },
+  Pais: {
+    type: String,
+    required: true,
+  },
+  Estado: {
+    type: String,
+    required: true,
+  },
+  Cidade: {
+    type: String,
+    required: true,
+  },
+  TipoBairro: {
+    type: String,
+    required: false,
+  },
+  Bairro: {
+    type: String,
+    required: true,
+  },
+  TipoRua: {
+    type: String,
+    required: false,
+  },
+  Rua: {
+    type: String,
+    required: true,
+  },
+  Numero: {
+    type: Number,
+    required: true,
+  },
+  Complemento: {
+    type: String,
+    required: false,
   },
 });
 

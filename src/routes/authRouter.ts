@@ -1,18 +1,18 @@
-import express from 'express';
+import express from "express";
 import {
   authenticateArtista,
   logoutArtista,
-} from '../controllers/Artista/authArtistaController';
+} from "../controllers/Artista/authArtistaController";
 import {
   deleteArtista,
   listArtista,
-} from '../controllers/Artista/artistaControllers';
+} from "../controllers/Artista/artistaControllers";
 
 const router = express.Router();
 
-router.get('/registrar', authenticateArtista);
-router.post('/logout', logoutArtista);
-router.get('/todosArtistas', listArtista);
-router.delete('/deleteArtista/:artistaId', deleteArtista);
+router.get("/registrar", authenticateArtista);
+router.post("/logout", logoutArtista);
+//router.get('/todosArtistas', listArtista);
+router.delete("/deleteArtista/:artistaId", deleteArtista);
 
 export default router;

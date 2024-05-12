@@ -4,23 +4,68 @@ import Evento, { IEvento } from "../../models/Evento";
 
 const createEvento = async (req: Request, res: Response) => {
   try {
-    const { id, title, category, description, image, artista, artistaImage } =
-      req.body;
+    const {
+      Titulo,
+      Categoria,
+      DescricaoEvento,
+      Data,
+      image,
+      artista,
+      artistaImagem,
+      Cep,
+      Pais,
+      Estado,
+      Cidade,
+      TipoBairro,
+      Bairro,
+      TipoRua,
+      Rua,
+      Numero,
+      Complemento,
+    } = req.body;
 
-    if (!title || !description) {
+    if (
+      !Titulo ||
+      !Categoria ||
+      !DescricaoEvento ||
+      !Data ||
+      !image ||
+      !artista ||
+      !artistaImagem ||
+      !Cep ||
+      !Pais ||
+      !Estado ||
+      !Cidade ||
+      !TipoBairro ||
+      !Bairro ||
+      !TipoRua ||
+      !Rua ||
+      !Numero ||
+      !Complemento
+    ) {
       return res
         .status(400)
         .json({ message: "Por favor, forneça todos os campos necessários" });
     }
 
     const novoEvento: IEvento = new Evento({
-      id,
-      title,
-      category,
-      description,
+      Titulo,
+      Categoria,
+      DescricaoEvento,
+      Data,
       image,
       artista,
-      artistaImage,
+      artistaImagem,
+      Cep,
+      Pais,
+      Estado,
+      Cidade,
+      TipoBairro,
+      Bairro,
+      TipoRua,
+      Rua,
+      Numero,
+      Complemento,
     });
 
     await novoEvento.save();
@@ -51,7 +96,7 @@ const getEvento = async (req: Request, res: Response) => {
 
 const listEvento = async (req: Request, res: Response) => {
   try {
-    const eventos = await Evento.find({}, "title description category artista");
+    const eventos = await Evento.find({}, "Titulo DescricaoEvento artista");
     res.status(200).json(eventos);
   } catch (Error) {
     res.status(500).json("Ocorreu um erro na listagem de eventos.");

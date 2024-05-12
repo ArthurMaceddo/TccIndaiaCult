@@ -5,7 +5,7 @@ import {
   listEvento,
   getEvento,
   deleteEvento,
-} from "../controllers/Evento/postagemControllers";
+} from "../controllers/Evento/eventoControllers";
 
 const router = express.Router();
 
