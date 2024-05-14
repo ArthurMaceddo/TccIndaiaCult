@@ -5,6 +5,7 @@ export interface IUsuario extends Document {
   name: string;
   email: string;
   password: string;
+  img: string;
   comparePassword: (enteredPassword: string) => Promise<boolean>;
 }
 
@@ -12,6 +13,10 @@ const usuarioSchema = new Schema<IUsuario>({
   name: {
     type: String,
     required: true,
+  },
+  img: {
+    type: String,
+    default: "default.png",
   },
   email: {
     type: String,
@@ -21,7 +26,7 @@ const usuarioSchema = new Schema<IUsuario>({
   password: {
     type: String,
     required: true,
-  }
+  },
 });
 
 usuarioSchema.pre<IUsuario>("save", async function (next) {
@@ -34,7 +39,9 @@ usuarioSchema.pre<IUsuario>("save", async function (next) {
   return next();
 });
 
-usuarioSchema.methods.comparePassword = async function (enteredPassword: string) {
+usuarioSchema.methods.comparePassword = async function (
+  enteredPassword: string
+) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
