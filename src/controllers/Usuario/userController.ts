@@ -35,8 +35,8 @@ const createUsuario = async (req: Request, res: Response) => {
 };
 
 const getUsuario = async (req: Request, res: Response) => {
-  const { usuarioId } = req.params;
-  const usuario = await Usuario.findById(usuarioId, 'name email');
+  const { id } = req.params;
+  const usuario = await Usuario.findById(id, 'name email');
 
   if (!usuario) {
     res.status(400);

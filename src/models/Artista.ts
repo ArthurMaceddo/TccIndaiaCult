@@ -1,5 +1,5 @@
-import mongoose, { Document, Schema } from "mongoose";
-import bcrypt from "bcryptjs";
+import mongoose, { Document, Schema } from 'mongoose';
+import bcrypt from 'bcryptjs';
 
 export interface IArtista extends Document {
   name: string;
@@ -43,8 +43,8 @@ const artistaSchema = new Schema<IArtista>({
     required: true,
   },
 });
-artistaSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) {
+artistaSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) {
     next();
   }
 
@@ -57,6 +57,6 @@ artistaSchema.methods.comparePassword = async function (
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-const Artista = mongoose.model("Artista", artistaSchema);
+const Artista = mongoose.model('Artista', artistaSchema);
 
 export default Artista;
