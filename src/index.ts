@@ -46,7 +46,6 @@ app.listen(port, () => {
 app.use("/artistas", authenticate, authRouter);
 app.post("/registrar", registerArtista);
 app.post("/login", authenticateArtista);
-app.get("/todosArtistas", listArtista);
 
 app.use("/evento", authenticate, eventoRouter);
 app.use("/obras", authenticate, obrasRouter);

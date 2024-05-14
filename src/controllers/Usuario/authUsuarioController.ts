@@ -35,11 +35,13 @@ const authenticateUsuario = async (req: Request, res: Response) => {
   const usuario = await Usuario.findOne({ email });
 
   if (usuario && (await usuario.comparePassword(password))) {
-    generateToken(res, usuario._id);
+    const token = generateToken(res, usuario._id);
     res.status(201).json({
       id: usuario._id,
       name: usuario.name,
       email: usuario.email,
+      img: usuario.img,
+      token,
     });
   } else {
     res

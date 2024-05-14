@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.get("/registrar", authenticateArtista);
 router.post("/logout", logoutArtista);
-//router.get('/todosArtistas', listArtista);
+router.get("/todosArtistas", listArtista);
 router.delete("/deleteArtista/:artistaId", deleteArtista);
 
 export default router;
