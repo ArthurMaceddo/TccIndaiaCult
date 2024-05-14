@@ -8,12 +8,12 @@ import {
 } from '../controllers/Usuario/userController';
 
 const router = express.Router();
+router.get('/todosUsuarios', listUsuario);
 
 router.get('/:id', getUsuario);
 
 router.post('/registrarUsuario', createUsuario);
 router.post('/logoutUsuario', logoutUsuario);
-router.get('/todosUsuarios', listUsuario);
 router.delete('/deletaUsuario/:usuarioId', deleteUsuario);
 
 export default router;
