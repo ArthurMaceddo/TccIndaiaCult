@@ -1,5 +1,5 @@
-import mongoose, { Document, Schema } from "mongoose";
-import bcrypt from "bcryptjs";
+import mongoose, { Document, Schema } from 'mongoose';
+import bcrypt from 'bcryptjs';
 
 export interface IUsuario extends Document {
   name: string;
@@ -21,11 +21,11 @@ const usuarioSchema = new Schema<IUsuario>({
   password: {
     type: String,
     required: true,
-  }
+  },
 });
 
-usuarioSchema.pre<IUsuario>("save", async function (next) {
-  if (!this.isModified("password")) {
+usuarioSchema.pre<IUsuario>('save', async function (next) {
+  if (!this.isModified('password')) {
     return next();
   }
 
@@ -34,10 +34,12 @@ usuarioSchema.pre<IUsuario>("save", async function (next) {
   return next();
 });
 
-usuarioSchema.methods.comparePassword = async function (enteredPassword: string) {
+usuarioSchema.methods.comparePassword = async function (
+  enteredPassword: string
+) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-const Usuario = mongoose.model<IUsuario>("Usuario", usuarioSchema);
+const Usuario = mongoose.model<IUsuario>('User', usuarioSchema);
 
 export default Usuario;
