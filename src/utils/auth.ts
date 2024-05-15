@@ -8,7 +8,6 @@ const generateToken = (res: Response, userId: string) => {
   });
 
   res.cookie("jwt", token, {
-    httpOnly: true,
     secure: process.env.NODE_ENV !== "development",
     sameSite: "strict",
     maxAge: 180 * 180 * 1000,
@@ -18,7 +17,6 @@ const generateToken = (res: Response, userId: string) => {
 
 const clearToken = (res: Response) => {
   res.cookie("jwt", "", {
-    httpOnly: true,
     expires: new Date(0),
   });
 };
