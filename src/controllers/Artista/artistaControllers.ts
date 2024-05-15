@@ -85,12 +85,15 @@ const deleteArtista = async (req: Request, res: Response) => {
 };
 
 const updateArtista = async (req: Request, res: Response) => {
-  const { artista } = req.body;
   const { id } = req.params;
+  const { artista } = req.body;
 
+  if (!id) {
+    return res.status(404).json({ message: 'Artista não encontrado' });
+  }
   try {
     await Artista.findByIdAndUpdate(id, artista);
-    res.status(200).end();
+    res.status(200).json({ message: 'Artista atualizado com sucesso' });
   } catch (Error) {
     res
       .status(500)
@@ -98,4 +101,4 @@ const updateArtista = async (req: Request, res: Response) => {
   }
 };
 
-export { createArtista, getArtista, listArtista, deleteArtista };
+export { createArtista, getArtista, listArtista, deleteArtista, updateArtista };
