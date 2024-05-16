@@ -5,43 +5,29 @@ import Evento, { IEvento } from '../../models/Evento';
 const createEvento = async (req: Request, res: Response) => {
   try {
     const {
-      Titulo,
-      Categoria,
-      DescricaoEvento,
-      Data,
-      image,
-      artista,
-      artistaImagem,
-      Cep,
-      Pais,
-      Estado,
-      Cidade,
-      TipoBairro,
-      Bairro,
-      TipoRua,
-      Rua,
-      Numero,
-      Complemento,
+      titulo,
+      descricao,
+      genero,
+      data,
+      cep,
+      imagem,
+      autor,
+      horario,
+      qtdAvaliacao,
+      avaliacao,
+      artistas,
     } = req.body;
 
     if (
-      !Titulo ||
-      !Categoria ||
-      !DescricaoEvento ||
-      !Data ||
-      !image ||
-      !artista ||
-      !artistaImagem ||
-      !Cep ||
-      !Pais ||
-      !Estado ||
-      !Cidade ||
-      !TipoBairro ||
-      !Bairro ||
-      !TipoRua ||
-      !Rua ||
-      !Numero ||
-      !Complemento
+      !titulo ||
+      !genero ||
+      !descricao ||
+      !data ||
+      !imagem ||
+      !artistas ||
+      !cep ||
+      !autor ||
+      !horario
     ) {
       return res
         .status(400)
@@ -49,23 +35,17 @@ const createEvento = async (req: Request, res: Response) => {
     }
 
     const novoEvento: IEvento = new Evento({
-      Titulo,
-      Categoria,
-      DescricaoEvento,
-      Data,
-      image,
-      artista,
-      artistaImagem,
-      Cep,
-      Pais,
-      Estado,
-      Cidade,
-      TipoBairro,
-      Bairro,
-      TipoRua,
-      Rua,
-      Numero,
-      Complemento,
+      titulo,
+      descricao,
+      genero,
+      data,
+      cep,
+      imagem,
+      autor,
+      horario,
+      qtdAvaliacao,
+      avaliacao,
+      artistas,
     });
 
     await novoEvento.save();
@@ -82,10 +62,7 @@ const createEvento = async (req: Request, res: Response) => {
 
 const getEvento = async (req: Request, res: Response) => {
   const { eventoId } = req.params;
-  const evento = await Evento.findById(
-    eventoId,
-    'Titulo DescricaoEvento artista'
-  );
+  const evento = await Evento.findById(eventoId, 'titulo descricao autor data');
 
   if (!evento) {
     return res.status(404).json({ message: 'Evento não encontrado' });
@@ -96,7 +73,7 @@ const getEvento = async (req: Request, res: Response) => {
 
 const listEvento = async (req: Request, res: Response) => {
   try {
-    const eventos = await Evento.find({}, 'Titulo DescricaoEvento artista');
+    const eventos = await Evento.find({}, 'titulo descricao autor data');
     res.status(200).json(eventos);
   } catch (Error) {
     res.status(500).json('Ocorreu um erro na listagem de eventos.');
