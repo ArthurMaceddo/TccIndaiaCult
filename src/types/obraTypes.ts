@@ -1,10 +1,14 @@
 // types.ts
 export interface ObraBasicInfo {
   Id: String;
-  name: String;
-  imagem: String;
-  dataCriacao: Date;
-  artistaId: String;
+  titulo: string;
+  descricao: string;
+  genero: string;
+  autor: string;
+  qtdAvaliacoes: number;
+  avaliacoes: number;
+  data: Date;
+  imagem: string;
 }
 
 declare global {

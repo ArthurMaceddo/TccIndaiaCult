@@ -3,9 +3,18 @@ import Obra, { IObra } from '../../models/Obra';
 
 const createObra = async (req: Request, res: Response) => {
   try {
-    const { id, name, imagem, dataCriacao, artista } = req.body;
+    const {
+      titulo,
+      descricao,
+      genero,
+      autor,
+      qtdAvaliacoes,
+      avaliacoes,
+      data,
+      imagem,
+    } = req.body;
 
-    if (!name || !imagem || !dataCriacao) {
+    if (!titulo || !imagem || !data || !descricao || !genero || !autor) {
       return res
         .status(400)
         .json({ message: 'Por favor, forneça todos os campos necessários' });
@@ -14,11 +23,14 @@ const createObra = async (req: Request, res: Response) => {
     // Verifica se artista._id está presente na requisição
 
     const novaObra: IObra = new Obra({
-      id,
-      name,
+      titulo,
+      descricao,
+      genero,
+      autor,
+      qtdAvaliacoes,
+      avaliacoes,
+      data,
       imagem,
-      dataCriacao,
-      artista,
     });
 
     await novaObra.save(); // Adicionei o await aqui para aguardar a conclusão da operação de salvamento
@@ -35,7 +47,7 @@ const createObra = async (req: Request, res: Response) => {
 
 const getObra = async (req: Request, res: Response) => {
   const { obraId } = req.params;
-  const obra = await Obra.findById(obraId, 'name dataCriacao');
+  const obra = await Obra.findById(obraId, 'nome data descricao autor');
 
   if (!obra) {
     return res.status(404).json({ message: 'Obra não encontrada' });
@@ -46,7 +58,7 @@ const getObra = async (req: Request, res: Response) => {
 
 const listObra = async (req: Request, res: Response) => {
   try {
-    const obra = await Obra.find({}, 'name dataCriacao');
+    const obra = await Obra.find({}, 'nome data descricao autor');
     res.status(200).json(obra);
   } catch (Error) {
     res.status(500).json('Ocorreu um erro na listagem de obras.');
