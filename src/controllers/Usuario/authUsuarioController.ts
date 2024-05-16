@@ -1,32 +1,34 @@
-import Usuario from "../../models/Usuario";
-import { Request, Response } from "express";
-import { clearToken, generateToken } from "../../utils/auth";
+import Usuario from '../../models/Usuario';
+import { Request, Response } from 'express';
+import { clearToken, generateToken } from '../../utils/auth';
 
 const registerUsuario = async (req: Request, res: Response) => {
-  const { name, email, password } = req.body;
+  const { nome, email, senha, imagem } = req.body;
   const usuarioExits = await Usuario.findOne({ email });
 
   if (usuarioExits) {
-    return res.status(400).json({ message: "Usuario já existente" });
+    return res.status(400).json({ message: 'Usuario já existente' });
   }
 
   const usuario = await Usuario.create({
-    name,
+    nome,
     email,
-    password,
+    senha,
+    imagem,
   });
 
   if (usuario) {
     generateToken(res, usuario._id);
     res.status(201).json({
       id: usuario._id,
-      name: usuario.name,
+      name: usuario.nome,
       email: usuario.email,
+      imagem: usuario.imagem,
     });
   } else {
     res
       .status(400)
-      .json({ message: "Aconteceu um erro durante a criação deste Usuario" });
+      .json({ message: 'Aconteceu um erro durante a criação deste Usuario' });
   }
 };
 
@@ -38,19 +40,20 @@ const authenticateUsuario = async (req: Request, res: Response) => {
     generateToken(res, usuario._id);
     res.status(201).json({
       id: usuario._id,
-      name: usuario.name,
+      name: usuario.nome,
       email: usuario.email,
+      imagem: usuario.imagem,
     });
   } else {
     res
       .status(401)
-      .json({ message: "Usuario não encontrado / password incorrent" });
+      .json({ message: 'Usuario não encontrado / password incorrent' });
   }
 };
 
 const logoutUsuario = (req: Request, res: Response) => {
   clearToken(res);
-  res.status(200).json({ message: "Usuario se desconectou" });
+  res.status(200).json({ message: 'Usuario se desconectou' });
 };
 
 export { registerUsuario, authenticateUsuario, logoutUsuario };
