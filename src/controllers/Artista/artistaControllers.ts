@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import Artista from '../../models/Artista';
 import { ArtistaBasicInfo } from '../../types/artistaTypes';
-
+//
 const createArtista = async (req: Request, res: Response) => {
   try {
     const {

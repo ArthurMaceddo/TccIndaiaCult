@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import Artista from '../../models/Artista';
 import { generateToken, clearToken } from '../../utils/auth';
-
+//
 const registerArtista = async (req: Request, res: Response) => {
   const {
     nome,

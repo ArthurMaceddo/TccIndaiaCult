@@ -7,7 +7,7 @@ export interface ArtistaBasicInfo {
   email: string;
   avaliacao: number;
   qtdAvaliacao: number;
-  genero: string; ///criar interface
+  genero: string;
   descricao: string;
   banner: string;
 }
