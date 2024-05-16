@@ -1,12 +1,14 @@
 // types.ts
 export interface ArtistaBasicInfo {
   _id: string;
-  name: string;
+  redesSociais: string[];
+  nome: string;
+  imagem: string;
   email: string;
-  password: string;
-  genre: string;
-  description: string;
-  image: string;
+  avaliacao: number;
+  qtdAvaliacao: number;
+  genero: string; ///criar interface
+  descricao: string;
   banner: string;
 }
 
