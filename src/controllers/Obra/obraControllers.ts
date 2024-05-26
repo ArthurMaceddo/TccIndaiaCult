@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
-import Obra, { IObra } from '../../models/Obra';
+import { Request, Response } from "express";
+import Obra, { IObra } from "../../models/Obra";
 
 const createObra = async (req: Request, res: Response) => {
   try {
@@ -17,7 +17,7 @@ const createObra = async (req: Request, res: Response) => {
     if (!titulo || !imagem || !data || !descricao || !genero || !autor) {
       return res
         .status(400)
-        .json({ message: 'Por favor, forneça todos os campos necessários' });
+        .json({ message: "Por favor, forneça todos os campos necessários" });
     }
 
     // Verifica se artista._id está presente na requisição
@@ -36,21 +36,21 @@ const createObra = async (req: Request, res: Response) => {
     await novaObra.save(); // Adicionei o await aqui para aguardar a conclusão da operação de salvamento
 
     res.status(201).json({
-      message: 'Obra criada com sucesso.',
+      message: "Obra criada com sucesso.",
       obra: novaObra,
     });
   } catch (error) {
-    console.error('Erro ao criar obra:', error);
-    res.status(500).json({ message: 'Ocorreu um erro ao criar a obra.' });
+    console.error("Erro ao criar obra:", error);
+    res.status(500).json({ message: "Ocorreu um erro ao criar a obra." });
   }
 };
 
 const getObra = async (req: Request, res: Response) => {
   const { obraId } = req.params;
-  const obra = await Obra.findById(obraId, 'nome data descricao autor');
+  const obra = await Obra.findById(obraId, "nome data descricao autor");
 
   if (!obra) {
-    return res.status(404).json({ message: 'Obra não encontrada' });
+    return res.status(404).json({ message: "Obra não encontrada" });
   }
 
   res.status(200).json(obra);
@@ -58,10 +58,10 @@ const getObra = async (req: Request, res: Response) => {
 
 const listObra = async (req: Request, res: Response) => {
   try {
-    const obra = await Obra.find({}, 'nome data descricao autor');
+    const obra = await Obra.find({}, "nome data descricao autor");
     res.status(200).json(obra);
   } catch (Error) {
-    res.status(500).json('Ocorreu um erro na listagem de obras.');
+    res.status(500).json("Ocorreu um erro na listagem de obras.");
   }
 };
 
@@ -71,15 +71,34 @@ const deleteObra = async (req: Request, res: Response) => {
     const obra = await Obra.findByIdAndDelete(obraId);
 
     if (!obra) {
-      return res.status(404).json({ message: 'Obra não encontrada' });
+      return res.status(404).json({ message: "Obra não encontrada" });
     }
 
-    res.status(200).json({ message: 'Obra deletada com sucesso' });
+    res.status(200).json({ message: "Obra deletada com sucesso" });
   } catch (Error) {
     res.status(500).json({
-      message: 'Ocorreu um erro enquanto se deleveta a Obra, tente novamente.',
+      message: "Ocorreu um erro enquanto se deleveta a Obra, tente novamente.",
     });
   }
 };
 
+const updateObra = async (req: Request, res: Response) => {
+  const { obraId } = req.params;
+  const { obra } = req.body;
+
+  if (!obraId) {
+    return res
+      .status(404)
+      .json({ message: "Não foi possivel encontrar a obra" });
+  }
+
+  try {
+    await Obra.findByIdAndUpdate(obraId, obra);
+    res.status(200).json({ message: "Obra atualizada com sucesso" });
+  } catch (Error) {
+    res.status(500).json({
+      message: "Ocorreu um erro enquanto se atualizava a Obra",
+    });
+  }
+};
 export { createObra, listObra, getObra, deleteObra };
