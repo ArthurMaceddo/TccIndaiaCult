@@ -101,4 +101,4 @@ const updateObra = async (req: Request, res: Response) => {
     });
   }
 };
-export { createObra, listObra, getObra, deleteObra };
+export { createObra, listObra, getObra, deleteObra, updateObra };
