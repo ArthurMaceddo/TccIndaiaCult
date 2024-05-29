@@ -17,11 +17,13 @@ const registerUsuario = async (req: Request, res: Response) => {
   });
 
   if (usuario) {
-    generateToken(res, usuario._id);
+    const token = generateToken(res, usuario._id);
     res.status(201).json({
       id: usuario._id,
       name: usuario.name,
       email: usuario.email,
+      img: usuario.img,
+      token,
     });
   } else {
     res

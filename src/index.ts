@@ -11,6 +11,8 @@ import { authenticate } from "./middleware/authMiddleware";
 import { errorHandler } from "./middleware/errorMiddleware";
 import eventoRouter from "./routes/eventoAuthRouter";
 import obrasRouter from "./routes/obraAuthRouter";
+import artistaRouter from "./routes/authRouter";
+
 import {
   authenticateArtista,
   registerArtista,
@@ -50,6 +52,7 @@ app.use("/usuario", authenticate, userRouter);
 app.use("/registrarUsuario", registerUsuario);
 
 app.use("/loginUsuario", authenticateUsuario);
+app.use("/artista", artistaRouter);
 app.use(errorHandler);
 
 connectUserDB();
