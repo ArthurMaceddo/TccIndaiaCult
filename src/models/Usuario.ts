@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 export interface IUsuario extends Document {
   nome: string;
   email: string;
+
   senha: string;
   imagem: string;
   comparePassword: (enteredPassword: string) => Promise<boolean>;
@@ -14,6 +15,10 @@ const usuarioSchema = new Schema<IUsuario>({
     type: String,
     required: true,
   },
+  img: {
+    type: String,
+    default: "default.png",
+  },
   email: {
     type: String,
     required: true,
@@ -23,10 +28,13 @@ const usuarioSchema = new Schema<IUsuario>({
     type: String,
     required: true,
   },
+
+
   imagem: {
     type: String,
     required: true,
   },
+
 });
 
 usuarioSchema.pre<IUsuario>('save', async function (next) {
@@ -42,7 +50,9 @@ usuarioSchema.pre<IUsuario>('save', async function (next) {
 usuarioSchema.methods.comparePassword = async function (
   enteredPassword: string
 ) {
+
   return await bcrypt.compare(enteredPassword, this.senha);
+
 };
 
 const Usuario = mongoose.model<IUsuario>('User', usuarioSchema);

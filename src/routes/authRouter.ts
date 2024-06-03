@@ -11,9 +11,11 @@ import {
 
 const router = express.Router();
 
+
 router.get('/registrar', authenticateArtista);
 router.post('/logout', logoutArtista);
 router.delete('/deleteArtista/:artistaId', deleteArtista);
 router.patch('/atualizaArtista/:id', updateArtista);
+
 
 export default router;
