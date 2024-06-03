@@ -1,25 +1,19 @@
-import { Date } from "mongoose";
+import { Date } from 'mongoose';
 
 // types.ts
 export interface EventoBasicInfo {
   id: string;
-  Titulo: string;
-  Categoria: string;
-  DescricaoEvento: string;
-  Data: string;
-  image: string;
-  artista: string;
-  artistaImagem: string;
-  Cep: number;
-  Pais: string;
-  Estado: string;
-  Cidade: string;
-  TipoBairro: string;
-  Bairro: string;
-  TipoRua: string;
-  Rua: string;
-  Numero: number;
-  Complemento: string;
+  titulo: string;
+  descricao: string;
+  genero: string;
+  data: Date;
+  cep: number;
+  imagem: string;
+  autor: string;
+  horario: string;
+  qtdAvaliacao: string;
+  avaliacao: string;
+  artistas: string[];
 }
 
 declare global {

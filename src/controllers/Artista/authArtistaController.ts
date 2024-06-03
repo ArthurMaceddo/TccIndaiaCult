@@ -1,9 +1,19 @@
 import { Request, Response } from 'express';
 import Artista from '../../models/Artista';
 import { generateToken, clearToken } from '../../utils/auth';
-
+//
 const registerArtista = async (req: Request, res: Response) => {
-  const { name, email, password, genre, description, image, banner } = req.body;
+  const {
+    nome,
+    imagem,
+    email,
+    senha,
+    avaliacao,
+    qtdAvaliacao,
+    genero,
+    descricao,
+    banner,
+  } = req.body;
   const artistaExists = await Artista.findOne({ email });
 
   if (artistaExists) {
@@ -11,12 +21,14 @@ const registerArtista = async (req: Request, res: Response) => {
   }
 
   const artista = await Artista.create({
-    name,
+    nome,
+    imagem,
     email,
-    password,
-    genre,
-    description,
-    image,
+    senha,
+    avaliacao,
+    qtdAvaliacao,
+    genero,
+    descricao,
     banner,
   });
 
@@ -24,12 +36,14 @@ const registerArtista = async (req: Request, res: Response) => {
     generateToken(res, artista._id);
     res.status(201).json({
       id: artista._id,
-      name: artista.name,
+      nome: artista.nome,
       email: artista.email,
-      genre: artista.genre,
-      description: artista.description,
-      image: artista.image,
+      genero: artista.genero,
+      descricao: artista.descricao,
+      imagem: artista.imagem,
       banner: artista.banner,
+      avaliacao: artista.avaliacao,
+      qtdAvaliacao: artista.qtdAvaliacao,
     });
   } else {
     res
@@ -46,12 +60,14 @@ const authenticateArtista = async (req: Request, res: Response) => {
     generateToken(res, artista._id);
     res.status(201).json({
       id: artista._id,
-      name: artista.name,
+      nome: artista.nome,
       email: artista.email,
-      genre: artista.genre,
-      description: artista.description,
-      image: artista.image,
+      genero: artista.genero,
+      descricao: artista.descricao,
+      imagem: artista.imagem,
       banner: artista.banner,
+      avaliacao: artista.avaliacao,
+      qtdAvaliacao: artista.qtdAvaliacao,
     });
   } else {
     res

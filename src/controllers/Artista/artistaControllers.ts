@@ -1,19 +1,28 @@
 import { Request, Response } from 'express';
 import Artista from '../../models/Artista';
 import { ArtistaBasicInfo } from '../../types/artistaTypes';
-
+//
 const createArtista = async (req: Request, res: Response) => {
   try {
-    const { name, email, password, genre, description, image, banner } =
-      req.body;
+    const {
+      nome,
+      imagem,
+      email,
+      senha,
+      avaliacao,
+      qtdAvaliacao,
+      genero,
+      descricao,
+      banner,
+    } = req.body;
 
     if (
-      !name ||
+      !nome ||
       !email ||
-      !password ||
-      !genre ||
-      !description ||
-      !image ||
+      !senha ||
+      !genero ||
+      !descricao ||
+      !imagem ||
       !banner
     ) {
       return res
@@ -27,12 +36,14 @@ const createArtista = async (req: Request, res: Response) => {
     }
 
     const newArtista = new Artista({
-      name,
+      nome,
+      imagem,
       email,
-      password,
-      genre,
-      description,
-      image,
+      senha,
+      avaliacao,
+      qtdAvaliacao,
+      genero,
+      descricao,
       banner,
     });
 
@@ -49,7 +60,7 @@ const createArtista = async (req: Request, res: Response) => {
 
 const getArtista = async (req: Request, res: Response) => {
   const { artistaId } = req.params;
-  const artista = await Artista.findById(artistaId, 'name email');
+  const artista = await Artista.findById(artistaId, 'nome email');
 
   if (!artista) {
     res.status(400).json({ message: 'Artista não encotrado' });
@@ -60,7 +71,7 @@ const getArtista = async (req: Request, res: Response) => {
 
 const listArtista = async (req: Request, res: Response) => {
   try {
-    const artistas = await Artista.find({}, 'name email');
+    const artistas = await Artista.find({}, 'nome email');
     res.status(200).json(artistas);
   } catch (Error) {
     res.status(500).json(' Ocorreu um erro na listagem de artistas');
@@ -85,12 +96,15 @@ const deleteArtista = async (req: Request, res: Response) => {
 };
 
 const updateArtista = async (req: Request, res: Response) => {
-  const { artista } = req.body;
   const { id } = req.params;
+  const { artista } = req.body;
 
+  if (!id) {
+    return res.status(404).json({ message: 'Artista não encontrado' });
+  }
   try {
     await Artista.findByIdAndUpdate(id, artista);
-    res.status(200).end();
+    res.status(200).json({ message: 'Artista atualizado com sucesso' });
   } catch (Error) {
     res
       .status(500)
@@ -98,4 +112,4 @@ const updateArtista = async (req: Request, res: Response) => {
   }
 };
 
-export { createArtista, getArtista, listArtista, deleteArtista };
+export { createArtista, getArtista, listArtista, deleteArtista, updateArtista };
