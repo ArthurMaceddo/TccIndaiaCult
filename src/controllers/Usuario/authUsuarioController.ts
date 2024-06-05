@@ -44,6 +44,7 @@ const authenticateUsuario = async (req: Request, res: Response) => {
       name: usuario.nome,
       email: usuario.email,
       imagem: usuario.imagem,
+      token,
     });
   } else {
     res
