@@ -53,6 +53,9 @@ app.use("/registrarUsuario", registerUsuario);
 
 app.use("/loginUsuario", authenticateUsuario);
 app.use("/artista", artistaRouter);
+
+app.use("/loginArtista", authenticateArtista);
+
 app.use(errorHandler);
 
 connectUserDB();
