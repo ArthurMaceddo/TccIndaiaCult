@@ -1,5 +1,6 @@
-import { Request, Response, NextFunction } from 'express';
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import { Request, Response, NextFunction } from "express";
+import jwt, { JwtPayload } from "jsonwebtoken";
+import { decode } from "punycode";
 
 const authenticate = async (
   req: Request,
@@ -13,24 +14,24 @@ const authenticate = async (
     if (!token) {
       return res
         .status(401)
-        .send({ message: 'Não autorizado, token não encontrado' });
+        .send({ message: "Não autorizado, token não encontrado" });
     }
 
-    const jwtSecret = process.env.JWT_SECRET || '';
+    const jwtSecret = process.env.JWT_SECRET || "";
     const decoded = jwt.verify(token, jwtSecret) as JwtPayload;
 
-    if (!decoded || !decoded.userId) {
+    if (!decoded || !decoded.userId || !decoded.artistId) {
       console.log(decoded);
       res.status(401);
       return res
         .status(401)
-        .send({ message: 'Não autorizado, artistaId não encontrado' });
+        .send({ message: "Não autorizado, artistaId não encontrado" });
     }
 
     return next();
   } catch (e) {
     res.status(500);
-    throw new Error('Not authorized, invalid token');
+    throw new Error("Not authorized, invalid token");
   }
 };
 

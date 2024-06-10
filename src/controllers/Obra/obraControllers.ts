@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Obra, { IObra } from "../../models/Obra";
+import Artista from "../../models/Artista";
 
 const createObra = async (req: Request, res: Response) => {
   try {
@@ -58,9 +59,48 @@ const getObra = async (req: Request, res: Response) => {
 
 const listObra = async (req: Request, res: Response) => {
   try {
-    const obra = await Obra.find({}, "nome data descricao autor");
-    res.status(200).json(obra);
-  } catch (Error) {
+    // Busca todas as obras com apenas os campos desejados
+    const obras = await Obra.find(
+      {},
+      "titulo data descricao autor imagem genero"
+    );
+
+    // Mapeia cada obra para adicionar informações do autor
+    const obrasComAutor = await Promise.all(
+      obras.map(async (obra) => {
+        // Inicializa autor como null
+        let autor = null;
+
+        // Verifica se a obra tem um autor associado
+        if (obra.autor) {
+          // Encontra o autor da obra na tabela de artistas
+          autor = await Artista.findById(obra.autor);
+        }
+
+        // Retorna um objeto com as informações da obra e do autor
+        return {
+          _id: obra._id,
+          nome: obra.titulo,
+          data: obra.data,
+          titulo: obra.titulo,
+          descricao: obra.descricao,
+          genero: obra.genero,
+          autor: autor
+            ? {
+                // Verifica se autor é diferente de null antes de acessar suas propriedades
+                _id: autor._id,
+                nome: autor.nome,
+                imagem: autor.imagem,
+                // Adicione outros campos do autor conforme necessário
+              }
+            : null,
+          imagem: obra.imagem,
+        };
+      })
+    );
+
+    res.status(200).json(obrasComAutor);
+  } catch (error) {
     res.status(500).json("Ocorreu um erro na listagem de obras.");
   }
 };
