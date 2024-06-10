@@ -45,10 +45,10 @@ app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
-app.use("/evento", authenticate, eventoRouter);
-app.use("/obras", authenticate, obrasRouter);
+app.use("/evento", eventoRouter);
+app.use("/obras", obrasRouter);
 
-app.use("/usuario", authenticate, userRouter);
+app.use("/usuario", userRouter);
 app.use("/registrarUsuario", registerUsuario);
 
 app.use("/loginUsuario", authenticateUsuario);
